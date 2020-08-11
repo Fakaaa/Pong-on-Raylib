@@ -7,36 +7,34 @@ using namespace Loop;
 namespace Ball {
 
 	BALLON ball;
-	int impact;
-	int scorePj;
-
-		void DrawBall() {
+	int impact;  //Variable que me sierve de salida. Solucionando el error que ocurre cuando la pelota colisiona debajo de las paletas
+	int scorePj; //Variable que me permite como un "bool" saber que jugador hizo el punto 
+		//-----------------------------------------------------------------------
+		void DrawBall() { //Dibuja la pelota 
 			DrawCircleV(ball.POS, ball.RAD, WHITE);
 		}
-		
-		void InitializeBall() {
+		//-----------------------------------------------------------------------
+		void InitializeBall() { //Inicializa la pelota, con su posición, radio y demas caracteristicas
 			ball.POS = {screenWidth / 2,screenHeigth / 2};
 			ball.RAD = 20;
 			ball.SPEED = {8.0f,5.0f};
 			impact = 0;
 			scorePj = 0;
 		}
-		
-		void MoveBall() {
-
+		//-----------------------------------------------------------------------
+		void MoveBall() { //Mueve permanentemente la pelota por la pantalla y llama a la funcion chequear impactos
 			CheckImpacts();
-
-			ball.POS.x += ball.SPEED.x;
-			ball.POS.y += ball.SPEED.y;
+				ball.POS.x += ball.SPEED.x;
+				ball.POS.y += ball.SPEED.y;
 		}
-
-		void CheckImpacts() {
+		//-----------------------------------------------------------------------
+		void CheckImpacts() { //Se encarga de las colisiones de la pelota con los jugadores y limites de pantalla. Ademas setea las victorias.
+			//COLISIONES
 			if (ball.POS.y >= (screenHeigth - ball.RAD) || ball.POS.y <= ball.RAD) { ball.SPEED.y *= -1.0f; }
-
 			if (CheckCollisionCircleRec(ball.POS, ball.RAD, pj1.BODY) && impact != 1) {
 				impact = 1;
 				ball.SPEED.x *= -1.0f;
-				if (pj1.UP_Force || pj1.DOWN_Force) {
+				if (pj1.UP_Force||pj1.DOWN_Force) { // Condicional que va aumentando la velocidad poco a poco de la pelota al colicionar con las paletas
 					ball.SPEED.y += 0.8f;
 					ball.SPEED.x += 0.8f;
 				}
@@ -44,12 +42,12 @@ namespace Ball {
 			if (CheckCollisionCircleRec(ball.POS, ball.RAD, pj2.BODY) && impact != 2) {
 				impact = 2;
 				ball.SPEED.x *= -1.0f;
-				if (pj2.UP_Force || pj2.DOWN_Force) {
+				if (pj2.UP_Force||pj2.DOWN_Force) {
 					ball.SPEED.y += 0.8f;
 					ball.SPEED.x += 0.8f;
 				}
 			}
-
+			//VICTORIAS Y PUNTAJE
 			if (ball.POS.x < 0 - ball.RAD) {
 				pj2.GAMES += 1;
 				gameState = RESET;
@@ -60,7 +58,6 @@ namespace Ball {
 				gameState = RESET;
 				scorePj = 1;
 			}
-
 			if (gameState == RESET) {
 				ball.POS = { screenWidth / 2,screenHeigth / 2 };
 			}
