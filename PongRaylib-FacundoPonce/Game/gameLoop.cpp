@@ -1,4 +1,6 @@
 #include "loop.h"
+#include "players.h"
+using namespace Players;
 
 namespace Loop {
 
@@ -10,7 +12,8 @@ namespace Loop {
 	}
 
 	void DrawAll() {
-
+		DrawPjs(pj1);
+		DrawPjs(pj2);
 	}
 
 	void MacroInputs() {

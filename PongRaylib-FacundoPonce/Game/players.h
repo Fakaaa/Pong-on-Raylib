@@ -12,7 +12,7 @@ namespace Players {
 	extern PJS pj2;
 
 	extern void InitializePjs();
-	extern void DrawPjs();
-	extern void Inputs();
+	extern void DrawPjs(PJS& pjs);
+	extern void Inputs(PJS &p1, PJS &p2);
 }
 #endif // !PLAYERS
