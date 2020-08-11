@@ -14,8 +14,7 @@ namespace Screen {
 		thickLine = 5;
 	}
 
-	void DrawUI() {
+	void DrawLine() {
 		DrawLineEx(start, end, thickLine, WHITE);
-		
 	}
 }

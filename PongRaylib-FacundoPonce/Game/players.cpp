@@ -32,6 +32,8 @@ namespace Players {
 		fontSize = 50;
 		posXP2 = screenWidth - posXP1 - 100;
 		posYP2 = 0;
+		pj1.WON = false;
+		pj2.WON = false;
 	}
 
 	void DrawPjs(PJS& pjs) {

@@ -12,6 +12,8 @@ namespace Ball {
 
 	extern BALLON ball;
 	extern int impact;
+	extern int scorePj;
+	extern int bounceCount;
 
 	extern void DrawBall();
 	extern void InitializeBall();

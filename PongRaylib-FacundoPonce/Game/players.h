@@ -12,6 +12,7 @@ namespace Players {
 		bool UP_Force;
 		bool DOWN_Force;
 		int GAMES;
+		bool WON;
 	};
 
 	extern PJS pj1;

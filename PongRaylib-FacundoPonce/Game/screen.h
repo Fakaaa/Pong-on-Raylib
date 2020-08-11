@@ -2,8 +2,8 @@
 #define SCREEN_H
 
 #include "raylib.h"
-#define screenWidth 1280
-#define screenHeigth 720
+#define screenWidth 1600
+#define screenHeigth 900
 
 namespace Screen {
 
@@ -12,6 +12,6 @@ namespace Screen {
 	extern float thickLine;
 
 	extern void InitializeScreen();
-	extern void DrawUI();
+	extern void DrawLine();
 }
 #endif // !SCREEN_H

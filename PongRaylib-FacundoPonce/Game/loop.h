@@ -7,18 +7,19 @@ using namespace Screen;
 namespace Loop {
 
 	enum STATE{
-		NONE,
 		MENU,
 		PAUSE,
 		GAMEPLAY,
 		RESET,
+		WIN,
+		RESTART,
 		EXIT
 	};
 	extern STATE gameState;
 
 	extern void DrawAll();
 	extern void InitializeAll();
-	extern void MacroInputs();
+	extern void Fisicas();
 	extern void MainLoop();
 	extern void Gameplay();
 	extern void States();

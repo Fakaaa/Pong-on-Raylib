@@ -1,12 +1,8 @@
 ﻿  ball.cpp
   gameLoop.cpp
-c:\users\facundo\desktop\proyectos y juegos\desarrollo 1\pong-on-raylib\pongraylib-facundoponce\game\gameloop.cpp(50): warning C4244: 'argumento': conversión de 'double' a 'int'; posible pérdida de datos
-c:\users\facundo\desktop\proyectos y juegos\desarrollo 1\pong-on-raylib\pongraylib-facundoponce\game\gameloop.cpp(54): warning C4244: 'argumento': conversión de 'double' a 'int'; posible pérdida de datos
-c:\users\facundo\desktop\proyectos y juegos\desarrollo 1\pong-on-raylib\pongraylib-facundoponce\game\gameloop.cpp(55): warning C4244: 'argumento': conversión de 'double' a 'int'; posible pérdida de datos
-c:\users\facundo\desktop\proyectos y juegos\desarrollo 1\pong-on-raylib\pongraylib-facundoponce\game\gameloop.cpp(59): warning C4244: 'argumento': conversión de 'double' a 'int'; posible pérdida de datos
+c:\users\facundo\desktop\proyectos y juegos\desarrollo 1\pong-on-raylib\pongraylib-facundoponce\game\gameloop.cpp(56): warning C4244: 'argumento': conversión de 'double' a 'int'; posible pérdida de datos
+c:\users\facundo\desktop\proyectos y juegos\desarrollo 1\pong-on-raylib\pongraylib-facundoponce\game\gameloop.cpp(60): warning C4244: 'argumento': conversión de 'double' a 'int'; posible pérdida de datos
+c:\users\facundo\desktop\proyectos y juegos\desarrollo 1\pong-on-raylib\pongraylib-facundoponce\game\gameloop.cpp(61): warning C4244: 'argumento': conversión de 'double' a 'int'; posible pérdida de datos
 c:\users\facundo\desktop\proyectos y juegos\desarrollo 1\pong-on-raylib\pongraylib-facundoponce\game\gameloop.cpp(65): warning C4244: 'argumento': conversión de 'double' a 'int'; posible pérdida de datos
-  main.cpp
-  players.cpp
-  screen.cpp
   Generando código...
   Game.vcxproj -> C:\Users\Facundo\Desktop\PROYECTOS y JUEGOS\DESARROLLO 1\Pong-on-Raylib\PongRaylib-FacundoPonce\x64\Debug\Game.exe
