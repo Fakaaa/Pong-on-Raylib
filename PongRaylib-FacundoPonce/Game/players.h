@@ -3,9 +3,12 @@
 #include "loop.h"
 
 namespace Players {
+
 	struct PJS{
-		Vector2 POS;
 		Rectangle BODY;
+		float SPEED;
+		bool onTop;
+		bool onBot;
 	};
 
 	extern PJS pj1;
@@ -13,6 +16,7 @@ namespace Players {
 
 	extern void InitializePjs();
 	extern void DrawPjs(PJS& pjs);
-	extern void Inputs(PJS &p1, PJS &p2);
+	extern void Inputs(PJS& p1, PJS& p2);
+	extern void CheckLimits(PJS& pjs);
 }
 #endif // !PLAYERS

@@ -4,10 +4,13 @@ using namespace Players;
 
 namespace Loop {
 
-	bool onGame;
+	bool onGame = false;
 
 	void InitializeAll() {
 		InitializeScreen();
+		InitializePjs();
+		SetTargetFPS(60);
+
 		onGame = true;
 	}
 
@@ -17,24 +20,24 @@ namespace Loop {
 	}
 
 	void MacroInputs() {
-		if (IsKeyPressed(KEY_ESCAPE))
+		Inputs(pj1,pj2);
+		
+		if (IsKeyPressed(KEY_ENTER)) {
 			onGame = false;
-
-		if (!onGame)
-			WindowShouldClose();
+		}
 	}
 
 	void MainLoop() {
 
 		InitializeAll();
 
-		while (!WindowShouldClose()){
-
-			ClearBackground(BLACK);
+		while (onGame){
+			
+			MacroInputs();
 
 			BeginDrawing();
 
-			MacroInputs();
+			ClearBackground(BLACK);
 
 			DrawAll();
 
