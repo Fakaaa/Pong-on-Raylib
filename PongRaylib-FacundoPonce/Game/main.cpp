@@ -1,8 +1,9 @@
-#include "screen.h"
-using namespace Screen;
+#include "loop.h"
+using namespace Loop;
 
 int main(void) {
 
-	InitializeScreen();
+	MainLoop();
 
+	return 0;
 }

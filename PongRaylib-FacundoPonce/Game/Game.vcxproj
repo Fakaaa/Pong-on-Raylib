@@ -137,10 +137,12 @@
   <ItemGroup>
     <ClCompile Include="gameLoop.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="players.cpp" />
     <ClCompile Include="screen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="loop.h" />
+    <ClInclude Include="players.h" />
     <ClInclude Include="screen.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
