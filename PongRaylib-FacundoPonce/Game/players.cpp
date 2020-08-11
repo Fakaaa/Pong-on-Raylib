@@ -7,6 +7,9 @@ namespace Players {
 
 	PJS pj1;
 	PJS pj2;
+	int posXP1, posYP1;
+	int posXP2, posYP2;
+	int fontSize;
 
 	void InitializePjs() {
 
@@ -15,16 +18,27 @@ namespace Players {
 
 		pj1.BODY = { 0,screenHeigth / 2, width, height };
 		pj2.BODY = {screenWidth - width,screenHeigth / 2, width, height};
-		pj1.SPEED = 400;
-		pj2.SPEED = 400;
+		pj1.SPEED = { 400.0f, 400.0f};
+		pj2.SPEED = { 400.0f, 400.0f};
 		pj1.onBot = false;
 		pj1.onTop = false;
 		pj2.onBot = false;
 		pj2.onTop = false;
+		pj1.GAMES = 0;
+		pj2.GAMES = 0;
+
+		posXP1 = 250;
+		posYP2 = 0;
+		fontSize = 50;
+		posXP2 = screenWidth - posXP1 - 100;
+		posYP2 = 0;
 	}
 
 	void DrawPjs(PJS& pjs) {
+
 		DrawRectangleRec(pjs.BODY, WHITE);
+		DrawText(FormatText("PJ1: %i", pj1.GAMES), posXP1, posYP1, fontSize, WHITE);
+		DrawText(FormatText("PJ2: %i", pj2.GAMES), posXP2 , posYP2, fontSize, WHITE);
 	}
 
 	void CheckLimits(PJS& pjs) {
@@ -46,23 +60,31 @@ namespace Players {
 
 		if (IsKeyDown(KEY_W)) {
 			if (!p1.onTop) {
-				p1.BODY.y -= p1.SPEED * GetFrameTime();
+				p1.BODY.y -= p1.SPEED.y * GetFrameTime();
+				p1.UP_Force = true;
+				p1.DOWN_Force = false;
 			}
 		}
 		if (IsKeyDown(KEY_S)) {
 			if (!p1.onBot) {
-				p1.BODY.y += p1.SPEED * GetFrameTime();
+				p1.BODY.y += p1.SPEED.y * GetFrameTime();
+				p1.UP_Force = false;
+				p1.DOWN_Force = true;
 			}
 		}
 
 		if (IsKeyDown(KEY_UP)) {
 			if (!p2.onTop) {
-				p2.BODY.y -= p2.SPEED * GetFrameTime();
+				p2.BODY.y -= p2.SPEED.y * GetFrameTime();
+				p2.UP_Force = true;
+				p2.DOWN_Force = false;
 			}
 		}
 		if (IsKeyDown(KEY_DOWN)) {
 			if (!p2.onBot) {
-				p2.BODY.y += p2.SPEED * GetFrameTime();
+				p2.BODY.y += p2.SPEED.y * GetFrameTime();
+				p2.UP_Force = false;
+				p2.DOWN_Force = true;
 			}
 		}
 	}

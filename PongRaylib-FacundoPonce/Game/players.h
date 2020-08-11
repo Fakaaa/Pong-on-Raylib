@@ -6,9 +6,12 @@ namespace Players {
 
 	struct PJS{
 		Rectangle BODY;
-		float SPEED;
+		Vector2 SPEED;
 		bool onTop;
 		bool onBot;
+		bool UP_Force;
+		bool DOWN_Force;
+		int GAMES;
 	};
 
 	extern PJS pj1;
