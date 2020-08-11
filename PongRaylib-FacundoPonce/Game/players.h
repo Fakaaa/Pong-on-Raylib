@@ -5,9 +5,14 @@
 namespace Players {
 	struct PJS{
 		Vector2 POS;
+		Rectangle BODY;
 	};
 
 	extern PJS pj1;
 	extern PJS pj2;
+
+	extern void InitializePjs();
+	extern void DrawPjs();
+	extern void Inputs();
 }
 #endif // !PLAYERS
