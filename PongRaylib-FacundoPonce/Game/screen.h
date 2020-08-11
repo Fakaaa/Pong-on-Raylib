@@ -1,5 +1,5 @@
-#ifndef SCREEN
-#define SCREEN
+#ifndef SCREEN_H
+#define SCREEN_H
 
 #include "raylib.h"
 #define screenWidth 1280
@@ -14,4 +14,4 @@ namespace Screen {
 	extern void InitializeScreen();
 	extern void DrawUI();
 }
-#endif // !SCREEN
+#endif // !SCREEN_H

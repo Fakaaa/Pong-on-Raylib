@@ -2,6 +2,7 @@
 #include "players.h"
 
 using namespace Players;
+using namespace Loop;
 
 namespace Ball {
 
@@ -47,8 +48,9 @@ namespace Ball {
 			}
 		}
 
-		if (ball.POS.x < 0 - ball.RAD || ball.POS.x > screenWidth + ball.RAD) {
-
+		if (ball.POS.x < 0 - ball.RAD) {
+			pj2.GAMES += 1;
+			gameState = RESET;
 		}
 	}
 }

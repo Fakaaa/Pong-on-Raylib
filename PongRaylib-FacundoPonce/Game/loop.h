@@ -1,16 +1,26 @@
-#ifndef LOOP
-#define LOOP
+#ifndef LOOP_H
+#define LOOP_H
 #include "screen.h"
 
 using namespace Screen;
 
 namespace Loop {
 
-	extern bool onGame;
+	enum STATE{
+		NONE,
+		MENU,
+		PAUSE,
+		GAMEPLAY,
+		RESET,
+		EXIT
+	};
+	extern STATE gameState;
 
 	extern void DrawAll();
 	extern void InitializeAll();
 	extern void MacroInputs();
 	extern void MainLoop();
+	extern void Gameplay();
+	extern void States();
 }
-#endif // !LOOP
+#endif // !LOOP_H
