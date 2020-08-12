@@ -8,6 +8,7 @@ namespace Ball {
 		Vector2 POS;
 		float RAD;
 		Vector2 SPEED;
+		Color COLOR;
 	};
 
 	extern BALLON ball;
@@ -19,5 +20,6 @@ namespace Ball {
 	extern void InitializeBall();
 	extern void MoveBall();
 	extern void CheckImpacts();
+	extern void ChooseColor();
 }
 #endif // !BALL_H

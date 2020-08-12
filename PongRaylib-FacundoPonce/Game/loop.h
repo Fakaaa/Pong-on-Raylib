@@ -7,15 +7,21 @@ using namespace Screen;
 namespace Loop {
 
 	enum STATE{
+		NONE,
 		MENU,
+		BALL_SELECT,
+		ON_SELECT,
 		PAUSE,
 		GAMEPLAY,
 		RESET,
 		WIN,
 		RESTART,
+		CONTROLS,
+		SCORE,
 		EXIT
 	};
-	extern STATE gameState;
+	extern STATE actualGameState;
+	extern STATE auxGameState;
 
 	extern void DrawAll();
 	extern void InitializeAll();
