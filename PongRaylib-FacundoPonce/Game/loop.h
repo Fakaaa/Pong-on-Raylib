@@ -28,6 +28,8 @@ namespace Loop {
 	extern void Fisicas();
 	extern void MainLoop();
 	extern void Gameplay();
-	extern void States();
+	//extern void States();
+	void InputsMenu();
+	extern void StatesFixed();
 }
 #endif // !LOOP_H

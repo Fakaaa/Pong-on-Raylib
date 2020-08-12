@@ -1,6 +1,10 @@
 #include "ball.h"
 #include "players.h"
 
+#include <iostream>
+
+using namespace std;
+
 using namespace Players;
 using namespace Loop;
 
@@ -64,9 +68,9 @@ namespace Ball {
 			if (CheckCollisionCircleRec(ball.POS, ball.RAD, pj1.BODY) && impact != 1) {
 				impact = 1;
 				ball.SPEED.x *= -1.0f;
-				if (pj1.UP_Force||pj1.DOWN_Force) { // Condicional que va aumentando la velocidad poco a poco de la pelota al colicionar con las paletas
-					ball.SPEED.y += 0.8f;
-					ball.SPEED.x += 0.8f;
+				if (pj1.UP_Force || pj1.DOWN_Force) { // Condicional que va aumentando la velocidad poco a poco de la pelota al colicionar con las paletas
+					//ball.SPEED.y += 0.8f;
+					//ball.SPEED.x += 0.8f;
 				}
 			}
 			if (CheckCollisionCircleRec(ball.POS, ball.RAD, pj2.BODY) && impact != 2) {
