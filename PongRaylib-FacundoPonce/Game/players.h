@@ -4,6 +4,12 @@
 
 namespace Players {
 
+	enum POWER_UPS {
+		Switch,
+		Slowdown,
+		Bullet
+	};
+
 	struct PJS{
 		Rectangle BODY;
 		Vector2 SPEED;
@@ -13,10 +19,12 @@ namespace Players {
 		bool DOWN_Force;
 		int GAMES;
 		bool WON;
+		POWER_UPS luck;
 	};
 
 	extern PJS pj1;
 	extern PJS pj2;
+	extern POWER_UPS powerup;
 	extern int fontSize;
 
 	extern void InitializePjs();

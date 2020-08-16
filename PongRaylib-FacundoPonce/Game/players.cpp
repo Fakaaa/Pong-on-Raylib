@@ -59,30 +59,39 @@ namespace Players {
 				if (!p1.onTop) {
 					p1.BODY.y -= p1.SPEED.y * GetFrameTime();
 					p1.UP_Force = true;
-					p1.DOWN_Force = false;
 				}
 			}
+			else {
+				p1.UP_Force = false;
+			}
+
 			if (IsKeyDown(KEY_S)) {
 				if (!p1.onBot) {
 					p1.BODY.y += p1.SPEED.y * GetFrameTime();
-					p1.UP_Force = false;
 					p1.DOWN_Force = true;
 				}
+			}
+			else {
+				p1.DOWN_Force = false;
 			}
 			//PJ2
 			if (IsKeyDown(KEY_UP)) {
 				if (!p2.onTop) {
 					p2.BODY.y -= p2.SPEED.y * GetFrameTime();
 					p2.UP_Force = true;
-					p2.DOWN_Force = false;
 				}
+			}
+			else {
+				p2.UP_Force = false;
 			}
 			if (IsKeyDown(KEY_DOWN)) {
 				if (!p2.onBot) {
 					p2.BODY.y += p2.SPEED.y * GetFrameTime();
-					p2.UP_Force = false;
 					p2.DOWN_Force = true;
 				}
+			}
+			else {
+				p2.DOWN_Force = false;
 			}
 		}
 }
