@@ -20,16 +20,20 @@ namespace Loop {
 		SCORE,
 		EXIT
 	};
+	const int maxTime = 2;
 	extern STATE actualGameState;
 	extern STATE auxGameState;
+	extern int gameFrames;
+	extern int timer[maxTime];
 
-	extern void DrawAll();
-	extern void InitializeAll();
-	extern void Fisicas();
-	extern void MainLoop();
-	extern void Gameplay();
-	//extern void States();
+	void DrawAll();
+	void DrawTime();
+	void InitializeAll();
+	void Fisicas();
+	void MainLoop();
+	void Gameplay();
 	void InputsMenu();
-	extern void StatesFixed();
+	void StatesFixed();
+	void GameTime(int time[maxTime], int &frames);
 }
 #endif // !LOOP_H

@@ -10,22 +10,30 @@ namespace Loop {
 	STATE actualGameState; //Enum STATE, que determina el estado actual del juego
 	STATE previusGameState; //Enum STATE, que determina el estado previo del juego
 	STATE auxGameState;
+	int gameFrames;
+	int timer[maxTime];
 	//----------------------------------------------------------------------------------------------------	
 	void InitializeAll() { //Inicialización de todos los elementos usados en el gameplay
 		if (actualGameState != RESTART)
 			InitializeScreen();
 		InitializePjs();
+		gameFrames = 0;
 		SetTargetFPS(60);
 		actualGameState = MENU;
 	}
 	//----------------------------------------------------------------------------------------------------	
 	void DrawAll() { //Dibujado de todos los elementos del juego
-		DrawLine();
 		DrawPjs(pj1);
 		DrawPjs(pj2);
+		DrawPowerUpIn();
+		DrawLine();
 		DrawBall();
-		DrawText(FormatText("Ball Speed X: %i", static_cast<int>(ball.SPEED.x)), screenWidth / 2, 400, fontSize, RED);
-		DrawText(FormatText("Ball Speed Y: %i", static_cast<int>(ball.SPEED.y)), screenWidth / 2, 450, fontSize, RED);
+		DrawTime();
+	}
+	//----------------------------------------------------------------------------------------------------	
+	void DrawTime() {
+		DrawText(FormatText("Min %i", static_cast<int>(timer[0])), screenWidth / 2 - 150, 0, fontSize, WHITE);
+		DrawText(FormatText("seg %i", static_cast<int>(timer[1])), screenWidth / 2 + 30, 0, fontSize, WHITE);
 	}
 	//----------------------------------------------------------------------------------------------------	
 	void Fisicas() { //Fisicas del juego, junto al input de ambos jugadores
@@ -155,12 +163,12 @@ namespace Loop {
 		if (actualGameState == RESTART) {
 			InitializeAll();
 		}
+		GameTime(timer,gameFrames);
 	}
 	//----------------------------------------------------------------------------------------------------	
 	void MainLoop() { //Loop Principal del Juego
 		InitializeAll();
 		while (actualGameState != EXIT || !WindowShouldClose()) {
-			//States();
 			StatesFixed();
 			BeginDrawing();
 			ClearBackground(BLACK);
@@ -168,5 +176,23 @@ namespace Loop {
 			EndDrawing();
 		}
 		CloseWindow();
+	}
+	void GameTime(int time[maxTime], int &frames) {
+		if(actualGameState != PAUSE && previusGameState != RESET)
+			frames++;
+		if (frames >= 60) {
+			time[1]++;
+			if (time[1] > 59 && time[1] <= 60) {
+				time[1] = 0;
+				time[0]++;
+			}
+			frames = 0;
+		}
+
+		if (previusGameState == MENU) {
+			frames = 0;
+			time[0] = 0;
+			time[1] = 0;
+		}
 	}
 }

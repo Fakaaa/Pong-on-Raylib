@@ -1,15 +1,20 @@
 #include "players.h"
+#include "loop.h"
 #include <iostream>
 
+using namespace Loop;
 using namespace std;
 
 namespace Players {
 
 	PJS pj1;
 	PJS pj2;
+	POWER_UPS powerup;
 	int posXP1, posYP1;
 	int posXP2, posYP2;
 	int fontSize;
+	int randValue = 0;
+	bool powerUpSet;
 		//--------------------------------------------------------------------------------------------------
 		void InitializePjs() { //Inicializacion de los jugadores y sus valores
 			float width = 25;
@@ -31,12 +36,29 @@ namespace Players {
 			posYP2 = 0;
 			pj1.WON = false;
 			pj2.WON = false;
+			powerUpSet = false;
 		}
 		//--------------------------------------------------------------------------------------------------
 		void DrawPjs(PJS& pjs) { //Dibujado de paletas
 			DrawRectangleRec(pjs.BODY, WHITE);
 			DrawText(FormatText("PJ1: %i", pj1.GAMES), posXP1, posYP1, fontSize, WHITE);
 			DrawText(FormatText("PJ2: %i", pj2.GAMES), posXP2 , posYP2, fontSize, WHITE);
+		}
+		//--------------------------------------------------------------------------------------------------
+		void DrawPowerUpIn() {
+			if (!powerUpSet && (timer[1] == 10 || timer[1] == 25 || timer[1] == 40)) {
+				DrawText("Power UP INCOMING!!", posXP1 - 100, posYP1 + 400, fontSize, WHITE);
+				DrawText("Press [L] KEY!!", posXP1 - 100, posYP1 + 450, fontSize, WHITE);
+				DrawText("Power UP INCOMING!!", posXP2 - 300, posYP2 + 400, fontSize, WHITE);
+				DrawText("Press [9] KEY!!", posXP2 - 300, posYP2 + 450, fontSize, WHITE);
+			}
+
+			if(powerup == Switch && powerUpSet)
+				DrawText("SWITCH POWER-UP!!", screenWidth / 3, posYP2 + 400, fontSize, GREEN);
+			else if (powerup == Slowdown && powerUpSet)
+				DrawText("SLOWDOWN POWER-UP!!", screenWidth / 3, posYP2 + 400, fontSize, GREEN);
+			else if (powerup == Bullet && powerUpSet)
+				DrawText("BULLET POWER-UP!!", screenWidth / 3, posYP2 + 400, fontSize, GREEN);
 		}
 		//--------------------------------------------------------------------------------------------------
 		void CheckLimits(PJS& pjs) { //Chequeo de limites en las paletas [Limites en Y: menor a 0 y mayor al tamaño max]
@@ -54,6 +76,7 @@ namespace Players {
 		void Inputs(PJS& p1, PJS& p2) { //Inputs de los jugadores, desplazamiento de paletas
 			CheckLimits(p1);
 			CheckLimits(p2);
+			MakePowerUp();
 			//PJ1
 			if (IsKeyDown(KEY_W)) {
 				if (!p1.onTop) {
@@ -64,7 +87,6 @@ namespace Players {
 			else {
 				p1.UP_Force = false;
 			}
-
 			if (IsKeyDown(KEY_S)) {
 				if (!p1.onBot) {
 					p1.BODY.y += p1.SPEED.y * GetFrameTime();
@@ -92,6 +114,29 @@ namespace Players {
 			}
 			else {
 				p2.DOWN_Force = false;
+			}
+
+			//BOTH PJS
+			if (IsKeyDown(KEY_L)) {
+				p1.powerUp_Pick = true;
+				powerUpSet = false;
+			}
+			if (IsKeyDown(KEY_KP_9)) {
+				p2.powerUp_Pick = true;
+				powerUpSet = false;
+			}
+
+		}
+		//--------------------------------------------------------------------------------------------------
+		void MakePowerUp() {
+			if (timer[1] == 15 || timer[1] == 30 || timer[1] == 45 && !powerUpSet) {
+				randValue = GetRandomValue(0, 2);
+					if (randValue == 0) { powerup = Switch; }
+					if (randValue == 1) { powerup = Slowdown; }
+					if (randValue == 2) { powerup = Bullet; }
+						if (pj1.powerUp_Pick) { pj1.luck = powerup; }
+						if (pj2.powerUp_Pick) { pj2.luck = powerup; }
+				powerUpSet = true;
 			}
 		}
 }

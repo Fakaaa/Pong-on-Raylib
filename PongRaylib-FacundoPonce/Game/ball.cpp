@@ -17,6 +17,8 @@ namespace Ball {
 		//-----------------------------------------------------------------------
 		void DrawBall() { //Dibuja la pelota 
 			DrawCircleV(ball.POS, ball.RAD, ball.COLOR);
+			//DrawText(FormatText("Ball Speed X: %i", static_cast<int>(ball.SPEED.x)), screenWidth / 2, 400, fontSize, RED);
+			//DrawText(FormatText("Ball Speed Y: %i", static_cast<int>(ball.SPEED.y)), screenWidth / 2, 450, fontSize, RED);
 		}
 		//-----------------------------------------------------------------------
 		void ChooseColor() {

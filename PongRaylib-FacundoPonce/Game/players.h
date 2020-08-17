@@ -20,16 +20,20 @@ namespace Players {
 		int GAMES;
 		bool WON;
 		POWER_UPS luck;
+		bool powerUp_Pick;
 	};
 
 	extern PJS pj1;
 	extern PJS pj2;
 	extern POWER_UPS powerup;
 	extern int fontSize;
+	extern bool powerUpSet;
 
 	extern void InitializePjs();
 	extern void DrawPjs(PJS& pjs);
+	void DrawPowerUpIn();
 	extern void Inputs(PJS& p1, PJS& p2);
 	extern void CheckLimits(PJS& pjs);
+	extern void MakePowerUp();
 }
 #endif // !PLAYERS_H
