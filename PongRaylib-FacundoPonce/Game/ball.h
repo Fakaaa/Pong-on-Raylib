@@ -21,5 +21,7 @@ namespace Ball {
 	extern void MoveBall();
 	extern void CheckImpacts();
 	extern void ChooseColor();
+	extern void UsePowerUp();
+
 }
 #endif // !BALL_H

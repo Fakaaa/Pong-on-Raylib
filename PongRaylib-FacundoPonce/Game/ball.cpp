@@ -19,6 +19,9 @@ namespace Ball {
 			DrawCircleV(ball.POS, ball.RAD, ball.COLOR);
 			//DrawText(FormatText("Ball Speed X: %i", static_cast<int>(ball.SPEED.x)), screenWidth / 2, 400, fontSize, RED);
 			//DrawText(FormatText("Ball Speed Y: %i", static_cast<int>(ball.SPEED.y)), screenWidth / 2, 450, fontSize, RED);
+			//DrawText(FormatText("Power Up %i", (int)powerup), screenWidth / 2, 500, fontSize, YELLOW);
+			//DrawText(FormatText("Power Up PJ1 %i", (int)pj1.luck), screenWidth / 2, 550, fontSize, GREEN);
+			//DrawText(FormatText("Power Up PJ2 %i", (int)pj2.luck), screenWidth / 2, 600, fontSize, GREEN);
 		}
 		//-----------------------------------------------------------------------
 		void ChooseColor() {
@@ -55,7 +58,8 @@ namespace Ball {
 				actualGameState = GAMEPLAY;
 		}
 		//-----------------------------------------------------------------------
-		void MoveBall() { //Mueve permanentemente la pelota por la pantalla y llama a la funcion chequear impactos
+		void MoveBall() { //Mueve permanentemente la pelota por la pantalla, llama a la funcion chequear impactos y usar power
+			UsePowerUp();
 			CheckImpacts();
 				ball.POS.x += ball.SPEED.x;
 				ball.POS.y += ball.SPEED.y;
@@ -101,9 +105,54 @@ namespace Ball {
 					ball.SPEED.x = 8.0;
 				else
 					ball.SPEED.x = -8.0;
+				pj1.BODY.x = 0;
+				pj1.BODY.y = screenHeigth / 2;
+				pj2.BODY.x = screenWidth - 25;
+				pj2.BODY.y = screenHeigth / 2;
 			}
 			if (pj1.GAMES == 8 || pj2.GAMES == 8) {
 				actualGameState = WIN;
+			}
+		}
+		//-----------------------------------------------------------------------
+		void UsePowerUp() {
+			if (pj1.powerUp_Pick && pj1.luck != None) {
+				if (pj1.usePowerUp) {
+
+					if (pj1.luck == Switch)
+						ball.SPEED.y *= -1.0f;
+					if (pj1.luck == Bullet)
+						ball.SPEED.x = 35.0f;
+					if (pj1.luck == Slowdown) {
+						if(ball.SPEED.x < 0)
+						ball.SPEED.x = ball.SPEED.x + 8.0f;
+					}
+
+					powerUpSet = false;
+					pj1.luck = None;
+					pj1.powerUp_Pick = false;
+					pj1.usePowerUp = false;
+				}
+			}
+			if (pj2.powerUp_Pick && pj2.luck != None) {
+				if (pj2.usePowerUp) {
+					if (pj2.usePowerUp) {
+						
+						if (pj2.luck == Switch)
+							ball.SPEED.y *= -1.0f;
+						if (pj2.luck == Bullet)
+							ball.SPEED.x = -35.0f;
+						if (pj2.luck == Slowdown) {
+							if (ball.SPEED.x > 0)
+								ball.SPEED.x = ball.SPEED.x - 8.0f;
+						}
+
+						powerUpSet = false;
+						pj2.luck = None;
+						pj2.powerUp_Pick = false;
+						pj2.usePowerUp = false;
+					}
+				}
 			}
 		}
 }

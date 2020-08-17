@@ -15,6 +15,7 @@ namespace Players {
 	int fontSize;
 	int randValue = 0;
 	bool powerUpSet;
+	int pWin;
 		//--------------------------------------------------------------------------------------------------
 		void InitializePjs() { //Inicializacion de los jugadores y sus valores
 			float width = 25;
@@ -37,6 +38,7 @@ namespace Players {
 			pj1.WON = false;
 			pj2.WON = false;
 			powerUpSet = false;
+			pWin = 0;
 		}
 		//--------------------------------------------------------------------------------------------------
 		void DrawPjs(PJS& pjs) { //Dibujado de paletas
@@ -59,6 +61,15 @@ namespace Players {
 				DrawText("SLOWDOWN POWER-UP!!", screenWidth / 3, posYP2 + 400, fontSize, GREEN);
 			else if (powerup == Bullet && powerUpSet)
 				DrawText("BULLET POWER-UP!!", screenWidth / 3, posYP2 + 400, fontSize, GREEN);
+
+			if (pj1.powerUp_Pick && pWin == 1) {
+				DrawText("PLAYER 1 WIN THE PICK!!", screenWidth / 4, posYP2 + 450, fontSize, YELLOW);
+				pWin = 0;
+			}
+			if (pj2.powerUp_Pick && pWin == 2) {
+				DrawText("PLAYER 2 WIN THE PICK!!", screenWidth / 4, posYP2 + 450, fontSize, VIOLET);
+				pWin = 0;
+			}
 		}
 		//--------------------------------------------------------------------------------------------------
 		void CheckLimits(PJS& pjs) { //Chequeo de limites en las paletas [Limites en Y: menor a 0 y mayor al tamaño max]
@@ -116,26 +127,35 @@ namespace Players {
 				p2.DOWN_Force = false;
 			}
 
-			//BOTH PJS
-			if (IsKeyDown(KEY_L)) {
-				p1.powerUp_Pick = true;
-				powerUpSet = false;
+			//BOTH PJS PICK POWER UP
+			if (powerUpSet) {
+				if (IsKeyDown(KEY_L)) {
+					p1.powerUp_Pick = true;
+					p1.luck = powerup;
+					randValue = 0;
+				}
+				if (IsKeyDown(KEY_KP_9)) {
+					p2.powerUp_Pick = true;
+					p2.luck = powerup;
+					randValue = 0;
+				}
 			}
-			if (IsKeyDown(KEY_KP_9)) {
-				p2.powerUp_Pick = true;
-				powerUpSet = false;
+			//USE POWER UP
+			if (IsKeyDown(KEY_E) && powerUpSet) {
+				p1.usePowerUp = true;
+			}
+			if (IsKeyDown(KEY_KP_2) && powerUpSet) {
+				p2.usePowerUp = true;
 			}
 
 		}
 		//--------------------------------------------------------------------------------------------------
 		void MakePowerUp() {
 			if (timer[1] == 15 || timer[1] == 30 || timer[1] == 45 && !powerUpSet) {
-				randValue = GetRandomValue(0, 2);
-					if (randValue == 0) { powerup = Switch; }
-					if (randValue == 1) { powerup = Slowdown; }
-					if (randValue == 2) { powerup = Bullet; }
-						if (pj1.powerUp_Pick) { pj1.luck = powerup; }
-						if (pj2.powerUp_Pick) { pj2.luck = powerup; }
+				randValue = GetRandomValue(1, 3);
+					if (randValue == 1) { powerup = Switch; }
+					if (randValue == 2) { powerup = Slowdown; }
+					if (randValue == 3) { powerup = Bullet; }
 				powerUpSet = true;
 			}
 		}

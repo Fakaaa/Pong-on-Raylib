@@ -177,6 +177,7 @@ namespace Loop {
 		}
 		CloseWindow();
 	}
+	//----------------------------------------------------------------------------------------------------	
 	void GameTime(int time[maxTime], int &frames) {
 		if(actualGameState != PAUSE && previusGameState != RESET)
 			frames++;

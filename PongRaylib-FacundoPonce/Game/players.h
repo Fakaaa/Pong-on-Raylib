@@ -5,9 +5,10 @@
 namespace Players {
 
 	enum POWER_UPS {
-		Switch,
+		Switch = 1,
 		Slowdown,
-		Bullet
+		Bullet,
+		None
 	};
 
 	struct PJS{
@@ -21,6 +22,7 @@ namespace Players {
 		bool WON;
 		POWER_UPS luck;
 		bool powerUp_Pick;
+		bool usePowerUp;
 	};
 
 	extern PJS pj1;
@@ -34,6 +36,6 @@ namespace Players {
 	void DrawPowerUpIn();
 	extern void Inputs(PJS& p1, PJS& p2);
 	extern void CheckLimits(PJS& pjs);
-	extern void MakePowerUp();
+	void MakePowerUp();
 }
 #endif // !PLAYERS_H
