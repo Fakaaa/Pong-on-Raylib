@@ -1,8 +1,0 @@
-[P] colocar Pausa, reanudar letra [O]
-[E] salir del juego (cerrar) , [ESC] confirmar salir [O] reanudar
-[ENTER] empezar en menu
-
-PJ1		PJ2
-[W] ARRIBA	[FLECHITA ARRIBA]
-[S] ABAJO	[FLECHITA ABAJO]
-

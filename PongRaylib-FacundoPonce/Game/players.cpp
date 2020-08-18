@@ -15,6 +15,7 @@ namespace Players {
 	int fontSize;
 	int randValue = 0;
 	bool powerUpSet;
+	bool powerUpShow;
 	int pWin;
 		//--------------------------------------------------------------------------------------------------
 		void InitializePjs() { //Inicializacion de los jugadores y sus valores
@@ -38,6 +39,7 @@ namespace Players {
 			pj1.WON = false;
 			pj2.WON = false;
 			powerUpSet = false;
+			powerUpShow = false;
 			pWin = 0;
 		}
 		//--------------------------------------------------------------------------------------------------
@@ -45,6 +47,10 @@ namespace Players {
 			DrawRectangleRec(pjs.BODY, WHITE);
 			DrawText(FormatText("PJ1: %i", pj1.GAMES), posXP1, posYP1, fontSize, WHITE);
 			DrawText(FormatText("PJ2: %i", pj2.GAMES), posXP2 , posYP2, fontSize, WHITE);
+			if(pj1.powerUp_Pick)
+				DrawText("POWER UP AVIABLE", posXP1, posYP1 + 50, fontSize - 10, GREEN);
+			if (pj2.powerUp_Pick)
+				DrawText("POWER UP AVIABLE", posXP2, posYP2 + 50, fontSize - 10, GREEN);
 		}
 		//--------------------------------------------------------------------------------------------------
 		void DrawPowerUpIn() {
@@ -55,11 +61,11 @@ namespace Players {
 				DrawText("Press [9] KEY!!", posXP2 - 300, posYP2 + 450, fontSize, WHITE);
 			}
 
-			if(powerup == Switch && powerUpSet)
+			if(powerup == Switch && powerUpSet && powerUpShow)
 				DrawText("SWITCH POWER-UP!!", screenWidth / 3, posYP2 + 400, fontSize, GREEN);
-			else if (powerup == Slowdown && powerUpSet)
+			else if (powerup == Slowdown && powerUpSet && powerUpShow)
 				DrawText("SLOWDOWN POWER-UP!!", screenWidth / 3, posYP2 + 400, fontSize, GREEN);
-			else if (powerup == Bullet && powerUpSet)
+			else if (powerup == Bullet && powerUpSet && powerUpShow)
 				DrawText("BULLET POWER-UP!!", screenWidth / 3, posYP2 + 400, fontSize, GREEN);
 
 			if (pj1.powerUp_Pick && pWin == 1) {
@@ -132,11 +138,13 @@ namespace Players {
 				if (IsKeyDown(KEY_L)) {
 					p1.powerUp_Pick = true;
 					p1.luck = powerup;
+					powerUpShow = false;
 					randValue = 0;
 				}
 				if (IsKeyDown(KEY_KP_9)) {
 					p2.powerUp_Pick = true;
 					p2.luck = powerup;
+					powerUpShow = false;
 					randValue = 0;
 				}
 			}
@@ -157,6 +165,7 @@ namespace Players {
 					if (randValue == 2) { powerup = Slowdown; }
 					if (randValue == 3) { powerup = Bullet; }
 				powerUpSet = true;
+				powerUpShow = true;
 			}
 		}
 }

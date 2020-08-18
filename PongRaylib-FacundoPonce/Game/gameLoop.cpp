@@ -23,10 +23,10 @@ namespace Loop {
 	}
 	//----------------------------------------------------------------------------------------------------	
 	void DrawAll() { //Dibujado de todos los elementos del juego
+		DrawLine();
+		DrawPowerUpIn();
 		DrawPjs(pj1);
 		DrawPjs(pj2);
-		DrawPowerUpIn();
-		DrawLine();
 		DrawBall();
 		DrawTime();
 	}
@@ -69,11 +69,15 @@ namespace Loop {
 				actualGameState = CONTROLS;
 		}
 		if (IsKeyPressed(KEY_B)) {
-			if (previusGameState == PAUSE || previusGameState == CONTROLS || previusGameState == EXIT) {
-				if (previusGameState == PAUSE) {
-					actualGameState = RESTART;
-					InitializeAll();
-				}
+			if (previusGameState == PAUSE || previusGameState == CONTROLS) {
+				actualGameState = RESTART;
+				InitializeAll();
+				actualGameState = MENU;
+			}
+			if (actualGameState == EXIT && auxGameState == PAUSE) {
+				actualGameState = PAUSE;
+			}
+			else {
 				actualGameState = MENU;
 			}
 		}
@@ -100,11 +104,14 @@ namespace Loop {
 			InitializeBall();
 			break;
 		case Loop::PAUSE:
+			DrawAll();
+			DrawBackP();
 			DrawText("PAUSE", screenWidth / 2 - 100, screenHeigth / 3, fontSize, YELLOW);
 			DrawText("LETRA [O] To RESUME", screenWidth / 2 - 300, screenHeigth / 1.5, fontSize, YELLOW);
 			DrawText("LETRA [E] To EXIT", screenWidth / 2 - 300, (screenHeigth / 1.5) - (fontSize + 10), fontSize, YELLOW);
 			DrawText("LETRA [B] To Back Menu", screenWidth / 2 - 320, (screenHeigth / 1.5 - 150) - (fontSize + 10), fontSize, YELLOW);
 			previusGameState = PAUSE;
+			auxGameState = EXIT;
 			break;
 		case Loop::GAMEPLAY:
 			previusGameState = GAMEPLAY;
@@ -132,15 +139,19 @@ namespace Loop {
 			previusGameState = WIN;
 			break;
 		case Loop::CONTROLS:
-			DrawText("Player 1 [W] & [S]", screenWidth / 2 - 310, (screenHeigth / 1.5 - 160) - (fontSize + 10), fontSize, YELLOW);
-			DrawText("Player 2 [UP] & [DOWN]", screenWidth / 2 - 310, (screenHeigth / 1.5 - 90) - (fontSize + 10), fontSize, YELLOW);
-			DrawText("Press [B] to BACK", screenWidth / 2 - 310, (screenHeigth / 1.5 + 90) - (fontSize + 10), fontSize, YELLOW);
-			DrawText("Press [P] to PAUSE", screenWidth / 2 - 310, (screenHeigth / 1.5 - 240) - (fontSize + 10), fontSize, YELLOW);
+			DrawText("Player 1 [W] & [S]", screenWidth / 2 - 310, (screenHeigth / 3 + 60) - (fontSize + 10), fontSize, YELLOW);
+			DrawText("Take Power-UP [L] & USE [E]", screenWidth / 2 - 310, (screenHeigth / 3 + 110) - (fontSize + 10), fontSize, YELLOW);
+			DrawText("Player 2 [UP] & [DOWN]", screenWidth / 2 - 310, (screenHeigth / 2 + 10) - (fontSize + 10), fontSize, GREEN);
+			DrawText("Take Power-UP [9] & USE [2]", screenWidth / 2 - 310, (screenHeigth / 2 + 60) - (fontSize + 10), fontSize, GREEN);
+			DrawText("Press [B] to BACK", screenWidth / 2 - 310, (screenHeigth / 1.5 + 130) - (fontSize + 10), fontSize, WHITE);
+			DrawText("Press [P] to PAUSE", screenWidth / 2 - 310, (screenHeigth / 1.5 - 330) - (fontSize + 10), fontSize, VIOLET);
 			previusGameState = CONTROLS;
 			break;
 		case Loop::EXIT:
 			DrawText("Are you sure?\n[YES] = ESC", screenWidth / 2 - 320, screenHeigth / 2, fontSize, WHITE);
 			DrawText("[NO] = B", screenWidth / 2 - 320, screenHeigth / 1.5, fontSize, WHITE);
+			if(previusGameState == PAUSE)
+				auxGameState = PAUSE;
 			previusGameState = EXIT;
 			break;
 		default:
