@@ -17,6 +17,7 @@ namespace Players {
 	bool powerUpSet;
 	bool powerUpShow;
 	int pWin;
+	int auxFrames = 0;
 		//--------------------------------------------------------------------------------------------------
 		void InitializePjs() { //Inicializacion de los jugadores y sus valores
 			float width = 25;
@@ -41,6 +42,10 @@ namespace Players {
 			powerUpSet = false;
 			powerUpShow = false;
 			pWin = 0;
+			pj1.godTime = 3;
+			pj2.godTime = 3;
+			pj1.luck = None;
+			pj2.luck = None;
 		}
 		//--------------------------------------------------------------------------------------------------
 		void DrawPjs(PJS& pjs) { //Dibujado de paletas
@@ -61,12 +66,23 @@ namespace Players {
 				DrawText("Press [9] KEY!!", posXP2 - 300, posYP2 + 450, fontSize, WHITE);
 			}
 
-			if(powerup == Switch && powerUpSet && powerUpShow)
-				DrawText("SWITCH POWER-UP!!", screenWidth / 3, posYP2 + 400, fontSize, GREEN);
-			else if (powerup == Slowdown && powerUpSet && powerUpShow)
-				DrawText("SLOWDOWN POWER-UP!!", screenWidth / 3, posYP2 + 400, fontSize, GREEN);
-			else if (powerup == Bullet && powerUpSet && powerUpShow)
-				DrawText("BULLET POWER-UP!!", screenWidth / 3, posYP2 + 400, fontSize, GREEN);
+			if (powerUpSet && powerUpShow) {
+				switch (powerup)
+				{
+				case Players::Switch: DrawText("SWITCH POWER-UP!!", screenWidth / 3, posYP2 + 400, fontSize, GREEN);
+					break;
+				case Players::Slowdown: DrawText("SLOWDOWN POWER-UP!!", screenWidth / 3, posYP2 + 400, fontSize, GREEN);
+					break;
+				case Players::Bullet: DrawText("BULLET POWER-UP!!", screenWidth / 3, posYP2 + 400, fontSize, GREEN);
+					break;
+				case Players::GodMode: DrawText("GODMODE POWER-UP!!", screenWidth / 3, posYP2 + 400, fontSize, GREEN);
+					break;
+				case Players::None: // xd
+					break;
+				default:
+					break;
+				}
+			}
 
 			if (pj1.powerUp_Pick && pWin == 1) {
 				DrawText("PLAYER 1 WIN THE PICK!!", screenWidth / 4, posYP2 + 450, fontSize, YELLOW);
@@ -98,52 +114,34 @@ namespace Players {
 			if (IsKeyDown(KEY_W)) {
 				if (!p1.onTop) {
 					p1.BODY.y -= p1.SPEED.y * GetFrameTime();
-					p1.UP_Force = true;
 				}
-			}
-			else {
-				p1.UP_Force = false;
 			}
 			if (IsKeyDown(KEY_S)) {
 				if (!p1.onBot) {
 					p1.BODY.y += p1.SPEED.y * GetFrameTime();
-					p1.DOWN_Force = true;
 				}
-			}
-			else {
-				p1.DOWN_Force = false;
 			}
 			//PJ2
 			if (IsKeyDown(KEY_UP)) {
 				if (!p2.onTop) {
 					p2.BODY.y -= p2.SPEED.y * GetFrameTime();
-					p2.UP_Force = true;
 				}
-			}
-			else {
-				p2.UP_Force = false;
 			}
 			if (IsKeyDown(KEY_DOWN)) {
 				if (!p2.onBot) {
 					p2.BODY.y += p2.SPEED.y * GetFrameTime();
-					p2.DOWN_Force = true;
 				}
-			}
-			else {
-				p2.DOWN_Force = false;
 			}
 
 			//BOTH PJS PICK POWER UP
 			if (powerUpSet) {
 				if (IsKeyDown(KEY_L)) {
 					p1.powerUp_Pick = true;
-					p1.luck = powerup;
 					powerUpShow = false;
 					randValue = 0;
 				}
 				if (IsKeyDown(KEY_KP_9)) {
 					p2.powerUp_Pick = true;
-					p2.luck = powerup;
 					powerUpShow = false;
 					randValue = 0;
 				}
@@ -158,12 +156,52 @@ namespace Players {
 
 		}
 		//--------------------------------------------------------------------------------------------------
+		void GodModePowerUP() {
+			if (auxFrames >= 60 && pj1.luck == GodMode) {
+				pj1.godTime--;
+				auxFrames = 0;
+				if (pj1.godTime < 0) {
+					pj1.BODY.y = screenHeigth / 2;
+					pj1.BODY.height = 200;
+					pj1.godTime = 3;
+					pj1.luck = Empty;
+				}
+			}
+			if (auxFrames >= 60 && pj2.luck == GodMode) {
+				pj2.godTime--;
+				auxFrames = 0;
+				if (pj2.godTime < 0) {
+					pj2.BODY.y = screenHeigth / 2;
+					pj2.BODY.height = 200;
+					pj2.godTime = 3;
+					pj2.luck = Empty;
+				}
+			}
+			if (!powerUpSet && (pj1.luck == Empty || pj2.luck == Empty)) {
+				pj1.luck = None;
+				pj2.luck = None;
+			}
+		}
+		//--------------------------------------------------------------------------------------------------
 		void MakePowerUp() {
 			if (timer[1] == 15 || timer[1] == 30 || timer[1] == 45 && !powerUpSet) {
-				randValue = GetRandomValue(1, 3);
-					if (randValue == 1) { powerup = Switch; }
-					if (randValue == 2) { powerup = Slowdown; }
-					if (randValue == 3) { powerup = Bullet; }
+				//randValue = GetRandomValue(1, 4);
+				randValue = GodMode;
+				switch (randValue)
+				{	
+				case Players::Switch: powerup = Switch;
+					break;
+				case Players::Slowdown: powerup = Slowdown;
+					break;
+				case Players::Bullet: powerup = Bullet;
+					break;
+				case Players::GodMode: powerup = GodMode;
+					break;
+				case Players::None: powerup = None;
+					break;
+				default:
+					break;
+				}
 				powerUpSet = true;
 				powerUpShow = true;
 			}

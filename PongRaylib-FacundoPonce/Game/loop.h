@@ -20,6 +20,7 @@ namespace Loop {
 		SCORE,
 		EXIT
 	};
+
 	const int maxTime = 2;
 	extern STATE actualGameState;
 	extern STATE auxGameState;

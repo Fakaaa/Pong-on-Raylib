@@ -1,9 +1,6 @@
 #include "loop.h"
 using namespace Loop;
 
-int main(void) {
-
+void main() {
 	MainLoop();
-
-	return 0;
 }

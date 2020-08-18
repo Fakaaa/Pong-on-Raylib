@@ -8,7 +8,9 @@ namespace Players {
 		Switch = 1,
 		Slowdown,
 		Bullet,
-		None
+		GodMode,
+		None,
+		Empty
 	};
 
 	struct PJS{
@@ -16,13 +18,12 @@ namespace Players {
 		Vector2 SPEED;
 		bool onTop;
 		bool onBot;
-		bool UP_Force;
-		bool DOWN_Force;
 		int GAMES;
 		bool WON;
 		POWER_UPS luck;
 		bool powerUp_Pick;
 		bool usePowerUp;
+		int godTime;
 	};
 
 	extern PJS pj1;
@@ -30,6 +31,7 @@ namespace Players {
 	extern POWER_UPS powerup;
 	extern int fontSize;
 	extern bool powerUpSet;
+	extern int auxFrames;
 
 	extern void InitializePjs();
 	extern void DrawPjs(PJS& pjs);
@@ -37,5 +39,6 @@ namespace Players {
 	extern void Inputs(PJS& p1, PJS& p2);
 	extern void CheckLimits(PJS& pjs);
 	void MakePowerUp();
+	extern void GodModePowerUP();
 }
 #endif // !PLAYERS_H

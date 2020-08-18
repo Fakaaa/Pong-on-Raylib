@@ -14,14 +14,25 @@ namespace Ball {
 	int impact;  //Variable que me sierve de salida. Solucionando el error que ocurre cuando la pelota colisiona debajo de las paletas
 	int scorePj; //Variable que me permite como un "bool" saber que jugador hizo el punto 
 	bool growSpeed; //Variable que me permite aumentar o no la velocidad de la pelota
+	float speedBoost; //Valor que aumenta X cantidad la velocidad
 		//-----------------------------------------------------------------------
 		void DrawBall() { //Dibuja la pelota 
 			DrawCircleV(ball.POS, ball.RAD, ball.COLOR);
-			//DrawText(FormatText("Ball Speed X: %i", static_cast<int>(ball.SPEED.x)), screenWidth / 2, 400, fontSize, RED);
-			//DrawText(FormatText("Ball Speed Y: %i", static_cast<int>(ball.SPEED.y)), screenWidth / 2, 450, fontSize, RED);
-			//DrawText(FormatText("Power Up %i", (int)powerup), screenWidth / 2, 500, fontSize, YELLOW);
-			//DrawText(FormatText("Power Up PJ1 %i", (int)pj1.luck), screenWidth / 2, 550, fontSize, GREEN);
-			//DrawText(FormatText("Power Up PJ2 %i", (int)pj2.luck), screenWidth / 2, 600, fontSize, GREEN);
+			//DrawDevMode();
+		}
+		//-----------------------------------------------------------------------
+		void DrawDevMode() {
+			DrawCircleV(ball.pointTop, 5, GREEN);
+			DrawCircleV(ball.pointBot, 5, GREEN);
+			DrawCircleV(ball.pointRigth, 5, GREEN);
+			DrawCircleV(ball.pointLeft, 5, GREEN);
+			DrawText(FormatText("Ball Speed X: %i", static_cast<int>(ball.SPEED.x)), screenWidth / 2, 400, fontSize, RED);
+			DrawText(FormatText("Ball Speed Y: %i", static_cast<int>(ball.SPEED.y)), screenWidth / 2, 450, fontSize, RED);
+			DrawText(FormatText("Power Up %i", (int)powerup), screenWidth / 2, 500, fontSize, YELLOW);
+			DrawText(FormatText("God TIME p1 %i", (int)pj1.godTime), screenWidth / 2, 500, fontSize, YELLOW);
+			DrawText(FormatText("God TIME p2 %i", (int)pj2.godTime), screenWidth / 2, 550, fontSize, GREEN);
+			DrawText(FormatText("Power Up PJ1 %i", (int)pj1.luck), screenWidth / 2, 550, fontSize, GREEN);
+			DrawText(FormatText("Power Up PJ2 %i", (int)pj2.luck), screenWidth / 2, 600, fontSize, GREEN);
 		}
 		//-----------------------------------------------------------------------
 		void ChooseColor() {
@@ -51,6 +62,13 @@ namespace Ball {
 			ball.POS = {screenWidth / 2,screenHeigth / 2};
 			ball.RAD = 20;
 			ball.SPEED = {8.0f,5.0f};
+			speedBoost = 0.5f;
+
+			ball.pointRigth = { (ball.POS.x + ball.RAD), ball.POS.y };
+			ball.pointTop = { ball.POS.x, (ball.POS.y + ball.RAD) };
+			ball.pointBot = { ball.POS.x, (ball.POS.y - ball.RAD)};
+			ball.pointLeft = { (ball.POS.x - ball.RAD), ball.POS.y };
+
 			impact = 0;
 			scorePj = 0;
 			ball.COLOR = selected;
@@ -63,29 +81,55 @@ namespace Ball {
 			CheckImpacts();
 				ball.POS.x += ball.SPEED.x;
 				ball.POS.y += ball.SPEED.y;
+			CalcPoints();
+		}
+		//-----------------------------------------------------------------------
+		void CalcPoints() {
+			ball.pointRigth = { (ball.POS.x + ball.RAD), ball.POS.y };
+			ball.pointTop = { ball.POS.x, (ball.POS.y + ball.RAD) };
+			ball.pointBot = { ball.POS.x, (ball.POS.y - ball.RAD) };
+			ball.pointLeft = { (ball.POS.x - ball.RAD), ball.POS.y };
 		}
 		//-----------------------------------------------------------------------
 		void CheckImpacts() { //Se encarga de las colisiones de la pelota con los jugadores y limites de pantalla. Ademas setea las victorias.
+			if(pj1.luck == GodMode || pj2.luck == GodMode)
+				auxFrames++;
 			//COLISIONES
 			if (ball.POS.y >= (screenHeigth - ball.RAD) || ball.POS.y <= ball.RAD) { ball.SPEED.y *= -1.0f; }
-			if (ball.SPEED.x <= 35.0f && ball.SPEED.x >= -35.0f) { growSpeed = true; } else { growSpeed = false; }
+			if (ball.SPEED.x <= 17.0f && ball.SPEED.x >= -17.0f) { growSpeed = true; } else { growSpeed = false; }
 
-			if (CheckCollisionCircleRec(ball.POS, ball.RAD, pj1.BODY) && impact != 1) {
+			//COLLI ON X
+			if (CheckCollisionPointRec(ball.pointRigth, pj2.BODY) && impact != 1) {
 				impact = 1;
 				ball.SPEED.x *= -1.0f;
-				if (pj1.UP_Force || pj1.DOWN_Force) { // Condicional que va aumentando la velocidad poco a poco de la pelota al colicionar con las paletas
-					if(growSpeed)
-						ball.SPEED.x = ball.SPEED.x + 1.5f;
+				if (growSpeed) {
+					ball.SPEED.x = ball.SPEED.x - 1.0f;
+					if (ball.SPEED.y > 0) {
+						ball.SPEED.y = ball.SPEED.y + speedBoost;
+					}
+					else {
+						ball.SPEED.y = ball.SPEED.y - speedBoost;
+					}
 				}
 			}
-			if (CheckCollisionCircleRec(ball.POS, ball.RAD, pj2.BODY) && impact != 2) {
+			if (CheckCollisionPointRec(ball.pointLeft, pj1.BODY) && impact != 2) {
 				impact = 2;
 				ball.SPEED.x *= -1.0f;
-				if (pj2.UP_Force||pj2.DOWN_Force) {
-					if (growSpeed)
-						ball.SPEED.x = ball.SPEED.x - 1.5f;
+				if (growSpeed) {
+					ball.SPEED.x = ball.SPEED.x + 1.0f;
+					if (ball.SPEED.y > 0) {
+						ball.SPEED.y = ball.SPEED.y + speedBoost;
+					}
+					else {
+						ball.SPEED.y = ball.SPEED.y - speedBoost;
+					}
 				}
 			}
+			//COLLI ON Y
+			if (CheckCollisionPointRec(ball.pointTop, pj1.BODY) || CheckCollisionPointRec(ball.pointTop, pj2.BODY) || CheckCollisionPointRec(ball.pointBot, pj1.BODY) || CheckCollisionPointRec(ball.pointBot, pj2.BODY)) {
+				ball.SPEED.y *= -1.0f;
+			}
+
 			//VICTORIAS Y PUNTAJE
 			if (ball.POS.x < -ball.RAD) {
 				pj2.GAMES += 1;
@@ -99,56 +143,94 @@ namespace Ball {
 				auxGameState = SCORE;
 				scorePj = 1;
 			}
+			//RESET AFTER SCOREING
 			if (actualGameState == RESET) {
 				ball.POS = { screenWidth / 2,screenHeigth / 2 };
 				if (ball.SPEED.x > 0)
 					ball.SPEED.x = 8.0;
 				else
 					ball.SPEED.x = -8.0;
+				if (ball.SPEED.y > 0)
+					ball.SPEED.y = 5.0;
+				else
+					ball.SPEED.y = -5.0;
 				pj1.BODY.x = 0;
 				pj1.BODY.y = screenHeigth / 2;
 				pj2.BODY.x = screenWidth - 25;
 				pj2.BODY.y = screenHeigth / 2;
+				pj1.BODY.height = 200;
+				pj2.BODY.height = 200;
+				
+				pj1.luck = Empty;
+				pj2.luck = Empty;
+				pj1.godTime = 3;
+				pj2.godTime = 3;
 			}
+
+			GodModePowerUP();
+
+			//END THE MATCH IF SOMEONE WINS (8 POINTS)
 			if (pj1.GAMES == 8 || pj2.GAMES == 8) {
 				actualGameState = WIN;
 			}
 		}
 		//-----------------------------------------------------------------------
 		void UsePowerUp() {
-			if (pj1.powerUp_Pick && pj1.luck != None) {
+			if (pj1.powerUp_Pick && pj1.luck != Empty) {
 				if (pj1.usePowerUp) {
-
-					if (pj1.luck == Switch)
-						ball.SPEED.y *= -1.0f;
-					if (pj1.luck == Bullet)
-						ball.SPEED.x = 35.0f;
-					if (pj1.luck == Slowdown) {
-						if(ball.SPEED.x < 0)
-						ball.SPEED.x = ball.SPEED.x + 8.0f;
+					pj1.luck = powerup;
+					switch (pj1.luck)
+					{
+					case Players::Switch: ball.SPEED.y *= -1.0f;
+						break;
+					case Players::Slowdown:
+						if (ball.SPEED.x < 0)
+							ball.SPEED.x = ball.SPEED.x + 8.0f;
+						break;
+					case Players::Bullet: ball.SPEED.x = 35.0f;
+						break;
+					case Players::GodMode:
+							pj1.BODY.height = screenHeigth;
+							pj1.BODY.y = 0;
+						break;
+					case Players::None: //Nada xd
+						break;
+					default:
+						break;
 					}
-
 					powerUpSet = false;
-					pj1.luck = None;
+					if (pj1.luck != GodMode)
+						pj1.luck = Empty;
 					pj1.powerUp_Pick = false;
 					pj1.usePowerUp = false;
 				}
 			}
-			if (pj2.powerUp_Pick && pj2.luck != None) {
+			if (pj2.powerUp_Pick && pj2.luck != Empty) {
 				if (pj2.usePowerUp) {
 					if (pj2.usePowerUp) {
-						
-						if (pj2.luck == Switch)
-							ball.SPEED.y *= -1.0f;
-						if (pj2.luck == Bullet)
-							ball.SPEED.x = -35.0f;
-						if (pj2.luck == Slowdown) {
-							if (ball.SPEED.x > 0)
+						pj2.luck = powerup;
+						switch (pj2.luck)
+						{
+						case Players::Switch: ball.SPEED.y *= -1.0f;
+							break;
+						case Players::Slowdown:
+							if (ball.SPEED.x < 0)
 								ball.SPEED.x = ball.SPEED.x - 8.0f;
+							break;
+						case Players::Bullet: ball.SPEED.x = -35.0f;
+							break;
+						case Players::GodMode: 
+							pj2.BODY.height = screenHeigth;
+							pj2.BODY.y = 0;
+							break;
+						case Players::None: //Nada xd
+							break;
+						default:
+							break;
 						}
-
 						powerUpSet = false;
-						pj2.luck = None;
+						if(pj2.luck != GodMode)
+							pj2.luck = Empty;
 						pj2.powerUp_Pick = false;
 						pj2.usePowerUp = false;
 					}

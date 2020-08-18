@@ -19,7 +19,8 @@ namespace Screen {
 		void DrawLine() { //Dibuja la linea del centro la cual le brinda mas belleza al entorno del juego :3
 			DrawLineEx(start, end, thickLine, WHITE);
 		}
+		//-----------------------------------------------------------------------
 		void DrawBackP(){
-			DrawRectangleRec(backPause, BACK);
+			DrawRectangleRec(backPause, BACKGROUND);
 		}
 }

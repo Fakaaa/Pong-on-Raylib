@@ -9,6 +9,11 @@ namespace Ball {
 		float RAD;
 		Vector2 SPEED;
 		Color COLOR;
+
+		Vector2 pointTop;
+		Vector2 pointBot;
+		Vector2 pointLeft;
+		Vector2 pointRigth;
 	};
 
 	extern BALLON ball;
@@ -22,6 +27,7 @@ namespace Ball {
 	extern void CheckImpacts();
 	extern void ChooseColor();
 	extern void UsePowerUp();
-
+	void CalcPoints();
+	void DrawDevMode();
 }
 #endif // !BALL_H

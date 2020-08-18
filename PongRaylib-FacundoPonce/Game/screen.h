@@ -5,7 +5,7 @@
 #define screenWidth 1600
 #define screenHeigth 900
 
-#define BACK  CLITERAL(Color){ 0, 0, 0, 100 }
+#define BACKGROUND  CLITERAL(Color){ 0, 0, 0, 100 }
 namespace Screen {
 
 	extern Vector2 start;
