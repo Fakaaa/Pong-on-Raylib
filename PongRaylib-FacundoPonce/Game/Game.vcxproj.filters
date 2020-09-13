@@ -1,48 +1,70 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Archivos de origen">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Archivos de encabezado">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Archivos de recursos">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Archivos de origen</Filter>
+    <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\Gameplay\gameLoop.cpp">
+      <Filter>Gameplay</Filter>
     </ClCompile>
-    <ClCompile Include="screen.cpp">
-      <Filter>Archivos de origen</Filter>
+    <ClCompile Include="..\src\Gameplay\Ball\ball.cpp">
+      <Filter>Gameplay\Ball</Filter>
     </ClCompile>
-    <ClCompile Include="gameLoop.cpp">
-      <Filter>Archivos de origen</Filter>
+    <ClCompile Include="..\src\Gameplay\Screen\screen.cpp">
+      <Filter>Gameplay\Screen</Filter>
     </ClCompile>
-    <ClCompile Include="players.cpp">
-      <Filter>Archivos de origen</Filter>
+    <ClCompile Include="..\src\Gameplay\Player\players.cpp">
+      <Filter>Gameplay\Player</Filter>
     </ClCompile>
-    <ClCompile Include="ball.cpp">
-      <Filter>Archivos de origen</Filter>
+    <ClCompile Include="..\src\Menu\menu.cpp">
+      <Filter>Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Gameplay\variables.cpp">
+      <Filter>Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Gameplay\Sfx\music.cpp">
+      <Filter>Gameplay\Sfx</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="screen.h">
-      <Filter>Archivos de encabezado</Filter>
+    <Filter Include="Gameplay">
+      <UniqueIdentifier>{c07bdcbb-0235-477b-a7b6-4f78d95769d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Gameplay\Ball">
+      <UniqueIdentifier>{2c81cd9e-a304-43d0-965c-535fafc9c38b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Gameplay\Player">
+      <UniqueIdentifier>{c93c4ba6-9efa-4edc-878b-5117cb59fd1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Gameplay\Sfx">
+      <UniqueIdentifier>{3c748eae-2785-4a5c-93e5-3b73f3c0b7d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Gameplay\Screen">
+      <UniqueIdentifier>{c426b08e-7d90-41e1-ae28-920822ab8b09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Menu">
+      <UniqueIdentifier>{8e954521-b3d7-4c66-b7ad-2060068596e6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\Gameplay\loop.h">
+      <Filter>Gameplay</Filter>
     </ClInclude>
-    <ClInclude Include="loop.h">
-      <Filter>Archivos de encabezado</Filter>
+    <ClInclude Include="..\src\Gameplay\Ball\ball.h">
+      <Filter>Gameplay\Ball</Filter>
     </ClInclude>
-    <ClInclude Include="players.h">
-      <Filter>Archivos de encabezado</Filter>
+    <ClInclude Include="..\src\Gameplay\Screen\screen.h">
+      <Filter>Gameplay\Screen</Filter>
     </ClInclude>
-    <ClInclude Include="ball.h">
-      <Filter>Archivos de encabezado</Filter>
+    <ClInclude Include="..\src\Gameplay\Player\players.h">
+      <Filter>Gameplay\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Menu\menu.h">
+      <Filter>Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Gameplay\variables.h">
+      <Filter>Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Gameplay\Sfx\music.h">
+      <Filter>Gameplay\Sfx</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
